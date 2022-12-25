@@ -72,7 +72,8 @@ class AuthController extends Controller
         $token = $user->createToken($app->title);
         return [
             'user' => new UserResource($user),
-            'token' => $token->plainTextToken
+            'token' => $token->plainTextToken,
+            'role' => $user->role->name
         ];
     }
 }
