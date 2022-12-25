@@ -10,7 +10,7 @@ class Room extends Model
     use HasFactory;
     protected $table = 'rent_rooms';
     protected $guarded = ['id'];
-
+    protected $casts = ['features' => 'array'];
 
     public function rent()
     {

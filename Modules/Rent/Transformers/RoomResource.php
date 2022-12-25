@@ -20,6 +20,7 @@ class RoomResource extends JsonResource
             'description' => $this->description,
             'image' => $this->imageUrl($this->image),
             'capacity' => $this->capacity,
+            'features' => $this->features,
         ];
     }
 }

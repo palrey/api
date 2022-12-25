@@ -32,7 +32,10 @@ class RoomController extends Controller
             'title' => ['required', 'string'],
             'description' => ['required', 'string'],
             'image' => ['nullable', 'image'],
-            'capacity' => ['required', 'integer']
+            'capacity' => ['required', 'integer'],
+            'features' => ['nullable', 'array'],
+            'features.*.key' => ['required', 'string'],
+            'features.*.value' => ['required', 'string'],
         ]);
         if ($validator->fails()) {
             return $this->sendError('Verifique los datos enviados');
@@ -70,7 +73,10 @@ class RoomController extends Controller
             'title' => ['nullable', 'string'],
             'description' => ['nullable', 'string'],
             'image' => ['nullable', 'image'],
-            'capacity' => ['nullable', 'integer']
+            'capacity' => ['nullable', 'integer'],
+            'features' => ['nullable', 'array'],
+            'features.*.key' => ['required', 'string'],
+            'features.*.value' => ['required', 'string'],
         ]);
         if ($validator->fails()) {
             return $this->sendError('Verifique los datos enviados');

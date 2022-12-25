@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('description');
             $table->string('image')->nullable();
+            $table->json('features')->nullable();
             $table->unsignedTinyInteger('capacity')->default(0);
             $table->foreignIdFor(Rent::class);
             $table->timestamps();

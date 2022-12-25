@@ -25,7 +25,7 @@ class RentResource extends JsonResource
             'image' => $this->imageUrl($this->image),
             'address' => $this->address,
             'open' => $this->open,
-            'rooms' => $this->whenLoaded('rooms')
+            'rooms' => RoomResource::collection($this->whenLoaded('rooms'))
         ];
     }
 }
