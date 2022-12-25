@@ -117,4 +117,12 @@ class RentController extends Controller
         $model = Rent::find($id);
         return $model && $model->delete() ? $this->sendResponse() : $this->sendError();
     }
+    /**
+     * showWithRents
+     */
+    public function showWithRents(int $id)
+    {
+        $model = Rent::query()->with('rents')->where('id', $id)->first();
+        return $model ? new RentResource($model) : $this->sendError();
+    }
 }

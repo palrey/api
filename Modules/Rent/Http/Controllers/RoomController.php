@@ -1,11 +1,12 @@
 <?php
 
-namespace Modules\Room\Http\Controllers;
+namespace Modules\Rent\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Modules\Rent\Entities\Rent;
 use Modules\Rent\Entities\Room;
 use Modules\Rent\Transformers\RoomResource;
 
@@ -19,7 +20,6 @@ class RoomController extends Controller
     {
         return RoomResource::collection(Room::query()->simplePaginate(15));
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -97,5 +97,18 @@ class RoomController extends Controller
     {
         $model = Room::find($id);
         return $model && $model->delete() ? $this->sendResponse() : $this->sendError();
+    }
+
+    /**
+     * listByRent
+     * @param int $rentId
+     * @return JsonResponse
+     */
+    public function listByRent(int $rentId)
+    {
+        $rent = Rent::find($rentId);
+        if (!$rent) return $this->sendError();
+
+        return RoomResource::collection($rent->rooms);
     }
 }
