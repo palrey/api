@@ -1,0 +1,11 @@
+{
+    "name": "Rent",
+    "alias": "rent",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Rent\\Providers\\RentServiceProvider"
+    ],
+    "files": []
+}
