@@ -1,18 +1,16 @@
 {
-    "name": "nwidart/rent",
+    "name": "gds/rent",
     "description": "",
     "authors": [
         {
-            "name": "Nicolas Widart",
-            "email": "n.widart@gmail.com"
+            "name": "Adrian Capote Quintana",
+            "email": "adriancapote95@gmail.com"
         }
     ],
     "extra": {
         "laravel": {
             "providers": [],
-            "aliases": {
-
-            }
+            "aliases": {}
         }
     },
     "autoload": {

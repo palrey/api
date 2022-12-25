@@ -4,6 +4,7 @@ namespace Modules\Rent\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Support\Facades\Config;
 
 class RentServiceProvider extends ServiceProvider
 {
@@ -24,9 +25,9 @@ class RentServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerTranslations();
-        $this->registerConfig();
-        $this->registerViews();
+        // $this->registerTranslations();
+        // $this->registerConfig();
+        // $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
     }
 
@@ -51,7 +52,8 @@ class RentServiceProvider extends ServiceProvider
             module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower
+            module_path($this->moduleName, 'Config/config.php'),
+            $this->moduleNameLower
         );
     }
 
@@ -104,7 +106,7 @@ class RentServiceProvider extends ServiceProvider
     private function getPublishableViewPaths(): array
     {
         $paths = [];
-        foreach (\Config::get('view.paths') as $path) {
+        foreach (Config::get('view.paths') as $path) {
             if (is_dir($path . '/modules/' . $this->moduleNameLower)) {
                 $paths[] = $path . '/modules/' . $this->moduleNameLower;
             }
