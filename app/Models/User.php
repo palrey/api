@@ -43,4 +43,9 @@ class User extends \TCG\Voyager\Models\User
     {
         return  $this->isAdmin() || $this->role->name === 'vendor';
     }
+
+    public function profile()
+    {
+        return $this->hasOne(UserProfile::class);
+    }
 }

@@ -12,6 +12,11 @@ class UserProfile extends Model
     protected $guarded = ['id'];
     public $timestamps = false;
 
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
 
     public function user()
     {
