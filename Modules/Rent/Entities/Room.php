@@ -5,16 +5,15 @@ namespace Modules\Rent\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Rent extends Model
+class Room extends Model
 {
     use HasFactory;
-
+    protected $table = 'rent_rooms';
     protected $guarded = ['id'];
-    protected $table = 'rent_rents';
-    protected $casts = ['address', 'array', 'open' => 'boolean'];
 
-    public function rooms()
+
+    public function rent()
     {
-        return $this->hasMany(Room::class);
+        return $this->belongsTo(Rent::class);
     }
 }
