@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Rent\Http\Controllers\BookingController;
 use Modules\Rent\Http\Controllers\RentController;
 use Modules\Rent\Http\Controllers\RoomController;
 
@@ -12,6 +13,14 @@ Route::prefix('rents')->group(function () {
      */
     Route::prefix('rooms')->group(function () {
         Route::apiResource('', RoomController::class);
+    });
+    /**
+     * -----------------------------------------
+     *	Booking
+     * -----------------------------------------
+     */
+    Route::prefix('bookings')->group(function () {
+        Route::apiResource('', BookingController::class);
     });
     /**
      * -----------------------------------------

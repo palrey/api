@@ -16,4 +16,9 @@ class Room extends Model
     {
         return $this->belongsTo(Rent::class);
     }
+
+    public function bookingRooms()
+    {
+        return $this->belongsToMany(Booking::class, 'rent_booking_rooms');
+    }
 }
