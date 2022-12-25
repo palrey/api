@@ -33,4 +33,14 @@ class User extends \TCG\Voyager\Models\User
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function isAdmin()
+    {
+        return  $this->role->name === 'admin';
+    }
+
+    public function isVendor()
+    {
+        return  $this->isAdmin() || $this->role->name === 'vendor';
+    }
 }
