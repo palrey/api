@@ -2,6 +2,7 @@
 
 namespace Modules\Rent\Entities;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -73,5 +74,10 @@ class Booking extends Model
     public function bookingRooms()
     {
         return $this->belongsToMany(Room::class, 'rent_booking_rooms');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
