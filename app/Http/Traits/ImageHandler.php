@@ -23,10 +23,22 @@ trait ImageHandler
     static public function imageDefault($type = 'default')
     {
         if (!Storage::exists(self::$image_default[$type]))
-            Storage::copy(public_path(self::$image_default[$type]), self::$image_default[$type]);
+            Storage::copy(public_path('images/' . self::$image_default[$type]), self::$image_default[$type]);
         return self::$image_default[$type];
     }
 
+    /**
+     * imageUrl
+     * @param string $path
+     * @return string
+     */
+    static public function imageUrl(string $path)
+    {
+        if ($path && Storage::disk('public')->exists($path)) {
+            return env('APP_URL') . Storage::url($path);
+        }
+        return env('APP_URL') . '/images/' . self::$image_default['default'];
+    }
     /**
      * imageDelete
      * @param string $image
