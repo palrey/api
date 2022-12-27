@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->json('features')->nullable();
             $table->unsignedTinyInteger('capacity')->default(0);
+            $table->boolean('open')->default(true);
             $table->foreignIdFor(Rent::class);
             $table->timestamps();
         });

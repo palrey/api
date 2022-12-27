@@ -12,6 +12,7 @@ Route::prefix('rents')->group(function () {
      * -----------------------------------------
      */
     Route::prefix('rooms')->group(function () {
+        Route::get('available', [RoomController::class, 'listAvailable']);
         Route::apiResource('', RoomController::class);
     });
     /**

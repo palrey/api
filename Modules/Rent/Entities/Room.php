@@ -10,7 +10,23 @@ class Room extends Model
     use HasFactory;
     protected $table = 'rent_rooms';
     protected $guarded = ['id'];
-    protected $casts = ['features' => 'array'];
+    protected $casts = ['features' => 'array', 'open' => 'boolean'];
+
+    public function isAvailable(string $from, string $to): bool
+    {
+        if (!$this->open) return false;
+
+        $fromCount =  $this->bookings()
+            ->whereDate('date_from', '<=', $from)
+            ->whereDate('date_to', '>=', $from)->count();
+        $toCount =  $this->bookings()
+            ->whereDate('date_from', '<=', $to)
+            ->whereDate('date_to', '>=', $to)->count();
+        $betweenCount = $this->bookings()
+            ->whereDate('date_from', '>=', $from)
+            ->whereDate('date_to', '<=', $to)->count();
+        return $betweenCount + $toCount + $fromCount > 0 ? false : true;
+    }
 
     public function rent()
     {

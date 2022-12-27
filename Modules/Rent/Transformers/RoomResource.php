@@ -21,6 +21,7 @@ class RoomResource extends JsonResource
             'image' => $this->imageUrl($this->image),
             'capacity' => $this->capacity,
             'features' => $this->features,
+            'open' => $this->open,
         ];
     }
 }

@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Modules\Rent\Entities\Booking;
+use Modules\Rent\Entities\Room;
 use Modules\Rent\Transformers\BookingResource;
 
 class BookingController extends Controller
@@ -52,7 +53,12 @@ class BookingController extends Controller
             return $this->sendError('Verifique los datos enviados');
         }
         $validator = $validator->validate();
-        // TODO Check rooms availability
+        // Check rooms availability
+        foreach ($validator['rooms'] as $roomID) {
+            $room = Room::find($roomID);
+            if (!$room || $room->isAvailable($validator['date_since'], $validator['date_to']))
+                return $this->sendError();
+        }
         $model = new Booking($validator);
         return $model->save()
             ? new BookingResource($model)

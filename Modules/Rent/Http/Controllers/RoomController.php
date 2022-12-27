@@ -117,4 +117,34 @@ class RoomController extends Controller
 
         return RoomResource::collection($rent->rooms);
     }
+
+    /**
+     * List Available
+     * @param Request request
+     * @return Illuminate\Http\JsonResponse
+     */
+    public function listAvailable(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'rent_id' => ['nullable', 'integer'],
+            'date' => ['required', 'array'],
+            'date.since' => ['required', 'string'],
+            'date.to' => ['required', 'string'],
+        ]);
+        if ($validator->fails()) {
+            return $this->sendError();
+        }
+        $validator = $validator->validate();
+        $rooms = [];
+        if ($validator['rent_id'])
+            $qry = Room::query()->where([['open', true], ['rent_id', $validator['rent_id']]])->get();
+        else
+            Room::query()->where('open', true)->get();
+        foreach ($qry as $room) {
+            if ($room->isAvailable($validator['date']['since'], $validator['date']['to']))
+                array_push($rooms, $room);
+        }
+        $roomsCollection = collect($rooms);
+        return RoomResource::collection($roomsCollection);
+    }
 }
