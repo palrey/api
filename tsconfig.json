@@ -20,6 +20,11 @@
             "@/*": ["ui/src/*"]
         }
     },
-    "include": ["ui/src", "./vite.config.ts"],
+    "include": [
+        "ui/src",
+        "./vite.config.ts",
+        "./tailwind.config.cjs",
+        "./postcss.config.cjs"
+    ],
     "references": [{ "path": "./tsconfig.node.json" }]
 }

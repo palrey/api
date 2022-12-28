@@ -2,9 +2,12 @@
 
 namespace Modules\Rent\Database\Seeders;
 
+use App\Models\User;
+use Carbon\Carbon;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Rent\Entities\Booking;
 use Modules\Rent\Entities\Rent;
 use Modules\Rent\Entities\Room;
 
@@ -19,8 +22,9 @@ class FakeSeeder extends Seeder
     {
         Model::unguard();
 
-        $this->seedRent();
-        $this->seedRooms(10, 5);
+        $this->seedRent(5);
+        $this->seedRooms(10);
+        $this->seedBooking(10, 5);
     }
     /**
      * Seed Rents
@@ -72,6 +76,34 @@ class FakeSeeder extends Seeder
                 ]);
             }
             Room::query()->insert($data);
+        }
+    }
+
+
+    /**
+     * Seed Booking
+     * @param int $limit
+     * @param int $repeat
+     */
+    private function seedBooking(int $limit = 10, int $repeat = 1)
+    {
+        $faker = Factory::create();
+        for ($r = 1; $r <= $repeat; $r++) {
+            $data = [];
+            for ($l = 1; $l <= $limit; $l++) {
+                array_push($data, [
+                    'total_price' => $faker->randomFloat(2, 1, 100),
+                    'status' => $faker->randomElement([0, 1, 2]),
+                    'date_since' => now(),
+                    'date_to' => Carbon::tomorrow(),
+                    'messages' => null,
+                    'guests' => json_encode([]),
+                    'user_id' => $faker->numberBetween(1, User::count()),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+            Booking::query()->insert($data);
         }
     }
 }
