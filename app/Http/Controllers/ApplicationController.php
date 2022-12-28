@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ApplicationResource;
 use App\Models\Application;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
 class ApplicationController extends Controller
 {
+    /**
+     * __construct
+     */
     public function __construct()
     {
-        // $this->middleware('auth:sanctum');
+        $this->middleware('auth:sanctum');
     }
     /**
      * Display a listing of the resource.
@@ -46,7 +50,7 @@ class ApplicationController extends Controller
         $validator = $validator->validate();
         $model = new Application($validator);
         return $model->save()
-            ? $this->sendResponse(new ApplicationResource($model))
+            ? (new ApplicationResource($model))->response()->status(Response::HTTP_CREATED)
             : $this->sendError();
     }
 

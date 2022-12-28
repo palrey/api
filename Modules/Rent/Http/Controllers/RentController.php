@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Traits\ImageHandler;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use Modules\Rent\Entities\Rent;
 use Modules\Rent\Transformers\RentResource;
@@ -53,7 +54,7 @@ class RentController extends Controller
         }
         $model = new Rent($validator);
         return $model->save()
-            ? new RentResource($model)
+            ? (new RentResource($model))->response()->status(Response::HTTP_CREATED)
             : $this->sendError();
     }
 

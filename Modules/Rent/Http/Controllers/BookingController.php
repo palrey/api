@@ -5,6 +5,7 @@ namespace Modules\Rent\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use Modules\Rent\Entities\Booking;
 use Modules\Rent\Entities\Room;
@@ -61,7 +62,7 @@ class BookingController extends Controller
         }
         $model = new Booking($validator);
         return $model->save()
-            ? new BookingResource($model)
+            ? (new BookingResource($model))->response()->status(Response::HTTP_CREATED)
             : $this->sendError();
     }
 

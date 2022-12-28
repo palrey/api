@@ -5,6 +5,7 @@ namespace Modules\Rent\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use Modules\Rent\Entities\Rent;
 use Modules\Rent\Entities\Room;
@@ -46,7 +47,7 @@ class RoomController extends Controller
         }
         $model = new Room($validator);
         return $model->save()
-            ? new RoomResource($model)
+            ? (new RoomResource($model))->response()->status(Response::HTTP_CREATED)
             : $this->sendError();
     }
 
