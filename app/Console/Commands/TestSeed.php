@@ -31,5 +31,6 @@ class TestSeed extends Command
         Artisan::call('migrate:fresh --seed --seeder FakeSeeder');
         Artisan::call('module:seed --class FakeSeeder');
         $this->info('Database Seeding Done!!!');
+        Artisan::call('test');
     }
 }

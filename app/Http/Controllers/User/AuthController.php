@@ -8,7 +8,9 @@ use App\Models\Application;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use TCG\Voyager\Models\Role;
 
 class AuthController extends Controller
 {
@@ -28,8 +30,9 @@ class AuthController extends Controller
         }
         $validator = $validator->validate();
         if (!auth()->attempt($validator)) return $this->sendError('Credenciales incorrectas', 401);
+        $current_app = env('APP_ENV') === 'testing' ? Application::first() : $request->current_app;
 
-        return $this->sendAuthResponse(auth()->user(), $request->current_app);
+        return $this->sendAuthResponse(auth()->user(), $current_app);
     }
 
     /**
@@ -51,7 +54,9 @@ class AuthController extends Controller
         // TODO Send confirmation email
         $validator['password'] = Hash::make($validator['password']);
         $model = new User($validator);
-        return $model->save() ? $this->sendAuthResponse($model, $request->current_app) : $this->sendError();
+        $model->role_id = Role::where('name', 'user')->first()->id;
+        $current_app = env('APP_ENV') === 'testing' ? Application::first() : $request->current_app;
+        return $model->save() ? $this->sendAuthResponse($model, $current_app) : $this->sendError();
     }
     /**
      * refreshToken
@@ -67,6 +72,7 @@ class AuthController extends Controller
      */
     private function sendAuthResponse(User $user, Application $app)
     {
+        if (!$user || !$app) return $this->sendError();
         // TODO Update tokens before delete it
         $user->tokens()->where('name', $app->title)->delete();
         $token = $user->createToken($app->title);
