@@ -23,7 +23,7 @@ return new class extends Migration
             $table->json('features')->nullable();
             $table->unsignedTinyInteger('capacity')->default(0);
             $table->boolean('open')->default(true);
-            $table->foreignIdFor(Rent::class);
+            $table->foreignIdFor(Rent::class)->constrained('rent_rents');
             $table->timestamps();
         });
     }

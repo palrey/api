@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('type');
             $table->text('data');
             $table->json('meta')->nullable();
-            $table->foreignIdFor(User::class)->nullable();
+            $table->foreignIdFor(User::class)->constrained()->nullable();
             $table->timestamps();
         });
     }
