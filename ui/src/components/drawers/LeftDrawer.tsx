@@ -1,9 +1,8 @@
 import React, { HtmlHTMLAttributes, PropsWithChildren } from 'react';
 import { CONST } from '@/helpers';
-import { IDrawerLink } from '@/types/components';
 
 interface Prop extends PropsWithChildren<HtmlHTMLAttributes<HTMLDivElement>> {
-    items?: IDrawerLink[];
+    items?: React.ReactNode;
 }
 /**
  * LeftDrawer
@@ -20,11 +19,7 @@ function LeftDrawer({ className, children, items }: Prop) {
                 <label htmlFor={drawerId} className="drawer-overlay">
                     overlay
                 </label>
-                <ul className="menu p-4 w-80 bg-base-100 text-base-content">
-                    {items?.map((i, k) => (
-                        <li key={k}>{i.label}</li>
-                    ))}
-                </ul>
+                {items}
             </div>
         </div>
     );

@@ -2,7 +2,7 @@ import React, { SVGProps } from 'react';
 
 interface Props extends SVGProps<SVGSVGElement> {
     path: string;
-    size: string;
+    size?: string;
     round?: boolean;
 }
 /**
