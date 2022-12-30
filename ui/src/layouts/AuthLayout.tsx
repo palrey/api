@@ -1,12 +1,13 @@
 import React from 'react';
-import Navbar from '@/components/navs/Navbar';
-import LeftDrawer from '@/components/drawers/LeftDrawer';
+import { Outlet } from 'react-router-dom';
 
 const AuthLayout = () => {
     return (
-        <LeftDrawer>
-            <Navbar />
-        </LeftDrawer>
+        <div className="min-h-screen flex items-center justify-center">
+            <div className="p-2">
+                <Outlet />
+            </div>
+        </div>
     );
 };
 
