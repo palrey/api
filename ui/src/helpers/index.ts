@@ -8,4 +8,5 @@ export function joinClassName(classNames: unknown[]) {
 }
 
 export * from './const';
+export * from './useAuth';
 export * from './useTheme';
