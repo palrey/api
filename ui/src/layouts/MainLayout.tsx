@@ -7,19 +7,29 @@ import {
 } from '@/components/drawers';
 import Navbar from '@/components/navs/Navbar';
 import { Outlet } from 'react-router-dom';
-import { mdiViewDashboard } from '@mdi/js';
+import {
+    mdiAccount,
+    mdiBed,
+    mdiCalendar,
+    mdiHomeOutline,
+    mdiViewDashboard
+} from '@mdi/js';
 
 function MainLayout() {
     return (
         <LeftDrawer
             items={
                 <ItemsContainer>
-                    <DrawerItem label="Hello" header className="mt-2" />
-                    <DrawerItem label="Hello" icon={mdiViewDashboard} />
-                    <DrawerItem label="Hello" icon={mdiViewDashboard} />
+                    <DrawerItem label="Adrian Capote" header className="mt-2" />
+                    <DrawerItem label="Inicio" icon={mdiViewDashboard} />
                     <ItemDivisor />
-                    <DrawerItem label="Hello" header />
-                    <DrawerItem label="Hello" icon={mdiViewDashboard} />
+                    <DrawerItem label="Renta" header />
+                    <DrawerItem label="Reservas" icon={mdiCalendar} />
+                    <DrawerItem label="Rentas" icon={mdiHomeOutline} />
+                    <DrawerItem label="Habitaciones" icon={mdiBed} />
+                    <ItemDivisor />
+                    <DrawerItem label="Ajustes" header />
+                    <DrawerItem label="Mi Cuenta" icon={mdiAccount} />
                 </ItemsContainer>
             }
         >
