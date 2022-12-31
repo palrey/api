@@ -9,7 +9,7 @@ interface Props
         HTMLInputElement
     > {
     label?: string;
-    onUpdate?: (v: number | string) => void;
+    setValue?: (v: number | string) => void;
     idKey: string;
     bordered?: boolean;
 }
@@ -19,7 +19,7 @@ function InputText({
     className,
     idKey,
     label,
-    onUpdate,
+    setValue,
     ...props
 }: Props) {
     return (
@@ -29,7 +29,7 @@ function InputText({
             </label>
             <input
                 onChange={e =>
-                    onUpdate ? onUpdate(e.target.value) : undefined
+                    setValue ? setValue(e.target.value) : undefined
                 }
                 className={joinClassName([
                     'input',
