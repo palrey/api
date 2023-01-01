@@ -7,7 +7,6 @@ import {
     mdiCalendarAccount,
     mdiHomeAlert,
     mdiHomeCity,
-    mdiMemory,
     mdiMessage,
     mdiSticker
 } from '@mdi/js';
@@ -16,6 +15,17 @@ import {
  * @returns
  */
 function HomePage() {
+    /**
+     * -----------------------------------------
+     *	Helpers
+     * -----------------------------------------
+     */
+    /**
+     * -----------------------------------------
+     *	Data
+     * -----------------------------------------
+     */
+
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
@@ -27,15 +37,17 @@ function HomePage() {
         }, 1000);
         return () => clearInterval(interval);
     }, [progress]);
+    /**
+     * -----------------------------------------
+     *	Render
+     * -----------------------------------------
+     */
+
     return (
         <div className="p-2">
             <div className="grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8">
                 <StatusWidget icon={mdiMessage} pulse label="10 Mensajes" />
-                <StatusWidget
-                    icon={mdiHomeAlert}
-                    pulse
-                    label="Nuevas Reservas"
-                />
+                <StatusWidget icon={mdiHomeAlert} pulse label="10 Mensajes" />
                 <StatusWidget icon={mdiCalendar} label="Calendario" />
                 <StatusWidget icon={mdiSticker} label="Notas" />
             </div>

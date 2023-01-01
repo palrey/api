@@ -1,20 +1,20 @@
 import React, { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import InputText from '../InputText';
-import { IAuthLogin } from '@/helpers/services/users';
 import BaseIcon from '@/components/widgets/BaseIcon';
+import type { IAuthLogin } from '@/services/users';
+import { $service } from '@/services';
 import { mdiLoading } from '@mdi/js';
-import { useAuth } from '@/helpers/providers';
 import { ROUTE_PATH } from '@/router/names';
+import { useDispatch, AuthActions } from '@/providers/redux';
 
 function AuthLoginForm() {
     /**
      * -----------------------------------------
-     *	Init
+     *	Helpers
      * -----------------------------------------
      */
-
-    const { login } = useAuth();
+    const Dispatch = useDispatch();
     const navigate = useNavigate();
     /**
      * -----------------------------------------
@@ -54,7 +54,8 @@ function AuthLoginForm() {
         e.preventDefault();
         setLoading(true);
         try {
-            await login(form);
+            const resp = await $service.user.login(form);
+            Dispatch(AuthActions.setAuthResponse(resp.data));
             navigate(ROUTE_PATH.HOME);
         } catch (err) {
             console.log({ err });

@@ -14,7 +14,7 @@ import {
     mdiHomeOutline,
     mdiViewDashboard
 } from '@mdi/js';
-import { useAuth } from '@/helpers/providers';
+import { useSelector } from '@/providers/redux';
 
 function MainLayout() {
     /**
@@ -22,12 +22,22 @@ function MainLayout() {
      *	Init
      * -----------------------------------------
      */
-    const { user } = useAuth();
+    const { auth } = useSelector(state => state);
+    /**
+     * -----------------------------------------
+     *	Render
+     * -----------------------------------------
+     */
+
     return (
         <LeftDrawer
             items={
                 <ItemsContainer>
-                    <DrawerItem label={user?.name} header className="mt-2" />
+                    <DrawerItem
+                        label={auth.user?.name}
+                        header
+                        className="mt-2"
+                    />
                     <DrawerItem label="Inicio" icon={mdiViewDashboard} />
                     <ItemDivisor />
                     <DrawerItem label="Renta" header />
