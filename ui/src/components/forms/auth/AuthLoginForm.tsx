@@ -1,19 +1,42 @@
 import React, { FormEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import InputText from '../InputText';
-import { $service } from '@/services';
-import { IAuthLogin } from '@/services/users';
+import { IAuthLogin } from '@/helpers/services/users';
 import BaseIcon from '@/components/widgets/BaseIcon';
 import { mdiLoading } from '@mdi/js';
+import { useAuth } from '@/helpers/providers';
+import { ROUTE_PATH } from '@/router/names';
 
 function AuthLoginForm() {
-    const { user } = $service;
+    /**
+     * -----------------------------------------
+     *	Init
+     * -----------------------------------------
+     */
+
+    const { login } = useAuth();
+    const navigate = useNavigate();
+    /**
+     * -----------------------------------------
+     *	Data
+     * -----------------------------------------
+     */
+
     const [form, setForm] = useState<IAuthLogin>({
         email: '',
         password: ''
     });
     const [error, setError] = useState<string[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
-
+    /**
+     * -----------------------------------------
+     *	Methods
+     * -----------------------------------------
+     */
+    /**
+     * showError
+     * @param err
+     */
     function showError(err: string) {
         setError(d => [...d, err]);
 
@@ -27,39 +50,49 @@ function AuthLoginForm() {
      * onSubmit
      * @param e FormEvent
      */
-    async function onSubmit(e: FormEvent) {
+    const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
         setLoading(true);
         try {
-            await user.login(form);
-        } catch (error) {
+            await login(form);
+            navigate(ROUTE_PATH.HOME);
+        } catch (err) {
+            console.log({ err });
             showError('Las Credenciales son incorrectas');
         }
         setLoading(false);
-    }
+    };
 
     return (
         <form className="space-y-2" onSubmit={onSubmit}>
             <InputText
                 type="email"
                 label="Email"
-                idKey="auth-login-email"
+                name="email"
+                id="auth-login-email"
                 bordered
                 value={form.email}
                 required
-                setValue={v =>
-                    setForm(oldVal => ({ ...oldVal, email: v.toString() }))
+                handleChange={v =>
+                    setForm(oldVal => ({
+                        ...oldVal,
+                        email: v.target.value
+                    }))
                 }
             />
             <InputText
                 type="password"
+                name="password"
                 label="Contraseña"
-                idKey="auth-login-password"
+                id="auth-login-password"
                 bordered
                 value={form.password}
                 required
-                setValue={v =>
-                    setForm(oldVal => ({ ...oldVal, password: v.toString() }))
+                handleChange={v =>
+                    setForm(oldVal => ({
+                        ...oldVal,
+                        password: v.target.value
+                    }))
                 }
             />
             <div className="pt-2">

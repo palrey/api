@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import StatusWidget from '@/components/widgets/StatusWidget';
-import { mdiAccount, mdiBed, mdiCalendarAccount, mdiHome } from '@mdi/js';
+import {
+    mdiAccount,
+    mdiBed,
+    mdiCalendar,
+    mdiCalendarAccount,
+    mdiHomeAlert,
+    mdiHomeCity,
+    mdiMemory,
+    mdiMessage,
+    mdiSticker
+} from '@mdi/js';
 /**
  * HomePage
  * @returns
@@ -20,13 +30,24 @@ function HomePage() {
     return (
         <div className="p-2">
             <div className="grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8">
-                <StatusWidget icon={mdiHome} label="15 Rentas" />
+                <StatusWidget icon={mdiMessage} pulse label="10 Mensajes" />
+                <StatusWidget
+                    icon={mdiHomeAlert}
+                    pulse
+                    label="Nuevas Reservas"
+                />
+                <StatusWidget icon={mdiCalendar} label="Calendario" />
+                <StatusWidget icon={mdiSticker} label="Notas" />
+            </div>
+
+            <div className="divider m-2"></div>
+
+            <div className="grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8">
+                <StatusWidget icon={mdiHomeCity} label="15 Rentas" />
                 <StatusWidget icon={mdiBed} label="15 Habitaciones" />
                 <StatusWidget icon={mdiAccount} label="150 Clientes" />
                 <StatusWidget icon={mdiCalendarAccount} label="1250 Reservas" />
             </div>
-
-            <div className="divider m-2"></div>
         </div>
     );
 }

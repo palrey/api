@@ -1,4 +1,8 @@
-import React, { DetailedHTMLProps, InputHTMLAttributes } from 'react';
+import React, {
+    ChangeEvent,
+    DetailedHTMLProps,
+    InputHTMLAttributes
+} from 'react';
 import { joinClassName } from '@/helpers';
 /**
  * Props
@@ -9,34 +13,31 @@ interface Props
         HTMLInputElement
     > {
     label?: string;
-    setValue?: (v: number | string) => void;
-    idKey: string;
+    handleChange?: (e: ChangeEvent<HTMLInputElement>) => void;
     bordered?: boolean;
 }
 
 function InputText({
     bordered,
     className,
-    idKey,
+    id,
     label,
-    setValue,
+    handleChange,
     ...props
 }: Props) {
     return (
         <div className="form-control">
-            <label className="label" htmlFor={idKey}>
+            <label className="label" htmlFor={id}>
                 <span className="label-text">{label}</span>
             </label>
             <input
-                onChange={e =>
-                    setValue ? setValue(e.target.value) : undefined
-                }
+                onChange={e => (handleChange ? handleChange(e) : undefined)}
                 className={joinClassName([
                     'input',
                     className,
                     bordered ? 'input-bordered' : ''
                 ])}
-                id={idKey}
+                id={id}
                 {...props}
             />
         </div>

@@ -1,5 +1,5 @@
 import { AxiosInstance } from 'axios';
-import { IUserProfile } from './types';
+import { IAddress } from './types';
 /**
  * User
  * @param api
@@ -38,6 +38,11 @@ export function User(api: AxiosInstance) {
     }
 }
 
+export interface IUser {
+    id: number;
+    name: string;
+    email: string;
+}
 
 /**
  * IAuthLogin
@@ -57,7 +62,7 @@ export interface IAuthRegister extends IAuthLogin {
  * IAuthResponse
  */
 export interface IAuthResponse {
-    profile: IUserProfile;
+    user: IUser;
     token: string;
     role: IUserRole;
 }
@@ -65,3 +70,17 @@ export interface IAuthResponse {
  * IUserRole
  */
 export type IUserRole = 'amdin' | 'vendor' | 'user';
+
+
+/**
+ * IUserProfile
+ */
+export interface IUserProfile {
+    id: number;
+    first_name: string;
+    last_name: string;
+    email: string;
+    tel: string;
+    address: Partial<IAddress>;
+}
+

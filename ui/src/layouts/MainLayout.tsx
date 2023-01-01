@@ -14,13 +14,20 @@ import {
     mdiHomeOutline,
     mdiViewDashboard
 } from '@mdi/js';
+import { useAuth } from '@/helpers/providers';
 
 function MainLayout() {
+    /**
+     * -----------------------------------------
+     *	Init
+     * -----------------------------------------
+     */
+    const { user } = useAuth();
     return (
         <LeftDrawer
             items={
                 <ItemsContainer>
-                    <DrawerItem label="Adrian Capote" header className="mt-2" />
+                    <DrawerItem label={user?.name} header className="mt-2" />
                     <DrawerItem label="Inicio" icon={mdiViewDashboard} />
                     <ItemDivisor />
                     <DrawerItem label="Renta" header />
