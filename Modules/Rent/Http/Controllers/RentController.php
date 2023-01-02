@@ -4,6 +4,7 @@ namespace Modules\Rent\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\ImageHandler;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -49,6 +50,10 @@ class RentController extends Controller
             return $this->sendError('Verifique los datos enviados');
         }
         $validator = $validator->validate();
+        // Check permission
+        $user = User::find(auth()->id());
+        if (!$user->isVendor()) return $this->sendError('Permisos insufucientes');
+        $validator['user_id'] = $user->id;
         if (isset($validator['image'])) {
             $validator['image'] = $this->imageUpload('rents', $request, 'image', 720);
         }
@@ -96,7 +101,10 @@ class RentController extends Controller
             return $this->sendError('Verifique los datos enviados');
         }
         $validator = $validator->validate();
-        $model = Rent::find($id);
+        $model = Rent::query()->where([
+            ['id', $id],
+            ['user_id', auth()->id()],
+        ])->first();
         if (!$model) return $this->sendError();
 
         if (isset($validator['image'])) {
